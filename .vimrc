@@ -36,6 +36,7 @@ Plug 'habamax/vim-polar'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'JuliaEditorSupport/julia-vim'
 "Plug 'Honda/vim-snippets'
 "Plug 'cm-core/You Complete Me'
 
