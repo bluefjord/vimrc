@@ -29,16 +29,19 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'lervag/vimtex'
 Plug 'KeitaNakamura/tex-conceal.vim'
-Plug 'morhetz/gruvbox'
 Plug 'SirVer/ultisnips'
-Plug 'dylanaraps/wal.vim'
 Plug 'habamax/vim-polar'
-Plug 'neovimhaskell/haskell-vim'
-Plug 'derekwyatt/vim-scala'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'JuliaEditorSupport/julia-vim'
-"Plug 'Honda/vim-snippets'
-"Plug 'cm-core/You Complete Me'
+
+Plug 'jremmen/vim-ripgrep'
+Plug 'tpope/vim-fugitive'
+Plug 'leafgarland/typescript-vim'
+Plug 'vim-utils/vim-man'
+Plug 'lyuts/vim-rtags'
+Plug 'ycm-core/YouCompleteMe'
+"Plug 'git@github.com:kien/ctrlp.vim.git'
+Plug 'mbbill/undotree'
+
+
 
 call plug#end()
 
@@ -57,30 +60,41 @@ hi Conceal ctermbg=none
 
 
 "#################################
-"# Buttons of the Multi Snips      # 
+"# Buttons of the Multi Snips    # 
 "#################################
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsEditSplit= "vertical"
 let g:UltiSnipsListSnippets="<c-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigglr="<c-k>"
 
-
+"#################################
+"# Window sizing                 #
+"#################################
+"
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
+    
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let mapleader = " "
+let g:netrw_browse_split=2
+let g:netrw_banner=0
+let g:netrw_winsize = 25
 
-"#################################
-"#  Syntax for haskell           # 
-"#################################
+let g:ctrlp_use_caching = 0
 
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <Leader>ps :Rg<SPACE>
+nnoremap <silent> <Leader>+ :vertical resize +5<CR>
+nnoremap <silent> <Leader>- :vertical resize -5<CR>
+nnoremap <leader>tm :term ++rows=15<CR>
 
 "#################################
 
@@ -106,6 +120,7 @@ nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/
 "#correcting spelling mistakes on the fly Giles Castle
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 nnoremap <F2> :set nonumber!<CR>
+
 
 "#################################
 "# Lines to save text folding    # 
