@@ -20,6 +20,10 @@ set rtp+=~/university/current_course
 setlocal spell
 set spelllang=en_us
 set foldmethod=manual
+set textwidth=72
+set wrapmargin=72
+set formatoptions+=t
+
 
 "#################################
 "# Plugins                       # 
@@ -28,23 +32,25 @@ set foldmethod=manual
 call plug#begin('~/.vim/plugged')
 
 Plug 'lervag/vimtex'
+Plug 'nikolvs/vim-sunbather'
+Plug 'sonph/onehalf'
+Plug 'dylanaraps/wal.vim' 
+Plug 'ayu-theme/ayu-vim'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'KeitaNakamura/tex-conceal.vim'
 Plug 'SirVer/ultisnips'
 Plug 'habamax/vim-polar'
-
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-fugitive'
 Plug 'leafgarland/typescript-vim'
 Plug 'vim-utils/vim-man'
 Plug 'lyuts/vim-rtags'
 Plug 'ycm-core/YouCompleteMe'
+Plug 'morhetz/gruvbox'
 "Plug 'git@github.com:kien/ctrlp.vim.git'
 Plug 'mbbill/undotree'
 
-
-
 call plug#end()
-
 "#################################
 "# vim Tex settings              # 
 "#################################
@@ -57,6 +63,12 @@ let g:vimtex_quickfix_mode=0
 set conceallevel=2
 let g:tex_conceal='abdmg'
 hi Conceal ctermbg=none
+
+"#################################
+"# You complete me               #
+"#################################
+
+let g:ycm_key_list_select_completion = ['<Enter>', '<Down>']
 
 
 "#################################
@@ -98,16 +110,34 @@ nnoremap <leader>tm :term ++rows=15<CR>
 
 "#################################
 
-set termguicolors
-colorscheme polar
+"let g:gruvbox_italic=1 
+"let g:gruvbox_guisp_fallback = "bg"
+let g:gruvbox_termcolors=16
+"set background=light
+colorscheme wal
 
-augroup colorscheme_change | au!
-    au ColorScheme polar hi Comment gui=italic cterm=italic
-augroup END
+hi clear SpellBad
+hi clear SpellCap
+hi clear SpellLocal
+hi clear SpellRare
+
+hi SpellBad cterm=standout
+hi SpellBad ctermfg=red
+hi SpellBad guifg=Red
+hi SpellCap cterm=standout
+hi SpellCap ctermfg=lightgreen
+hi SpellCap guifg=DarkCyan
+
+"hi SpellLocal ctermfg=yellow
+"hi SpellRare ctermfg=
+
+"augroup colorscheme_change | au!
+"    au ColorScheme polar hi Comment gui=italic cterm=italic
+"augroup END
 
 
 "#################################
-"#  Mappings                     # 
+""#  Mappings                     # 
 "#################################
 
 inoremap jj <Esc>:w<CR>:mkview<CR>
@@ -120,6 +150,7 @@ nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/
 "#correcting spelling mistakes on the fly Giles Castle
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 nnoremap <F2> :set nonumber!<CR>
+"nnoremaps
 
 
 "#################################
@@ -134,3 +165,20 @@ autocmd BufWinEnter *.* silent! loadview
 "###################################################
 
 autocmd FileType json syntax match Comment +\/\/.\+$+
+
+" YCM
+" The best part.
+
+nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
+nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
+
+
+
+
+
+
+
+
+
+
+
