@@ -23,6 +23,7 @@ set foldmethod=manual
 set textwidth=72
 set wrapmargin=72
 set formatoptions+=t
+set relativenumber
 
 
 "#################################
@@ -114,7 +115,8 @@ nnoremap <leader>tm :term ++rows=15<CR>
 "let g:gruvbox_guisp_fallback = "bg"
 let g:gruvbox_termcolors=16
 "set background=light
-colorscheme wal
+set termguicolors
+colorscheme gruvbox
 
 hi clear SpellBad
 hi clear SpellCap
