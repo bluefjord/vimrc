@@ -115,8 +115,8 @@ nnoremap <leader>tm :term ++rows=15<CR>
 "let g:gruvbox_guisp_fallback = "bg"
 let g:gruvbox_termcolors=16
 "set background=light
-set termguicolors
-colorscheme gruvbox
+"set termguicolors
+colorscheme wal
 
 hi clear SpellBad
 hi clear SpellCap
