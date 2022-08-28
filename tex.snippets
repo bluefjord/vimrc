@@ -15,22 +15,30 @@ def env(name):
 
 endglobal
 
-
 context "math()"
-snippet "(\S+)xx" "x subscript" riA
-`!p snip.rv=match.group(1)`${1}_x  
+snippet emf "the E that is used to denote emf of a circuit but also used more generally sometimes" iA
+\mathcal{E} 
 endsnippet
 
+snippet under "underline some text"
+\underline{${1}} ${0}
+endsnippet
 
-context "math()"
-snippet "(\S+)yy" "y subscript" riA
-`!p snip.rv=match.group(1)`${1}_y
+context "math()" 
+snippet cali "caligraphy" wiA 
+\mathcal{${1}} ${0}
 endsnippet
 
 context "math()"
-snippet "(\S+)zz" "z subscript" riA
-`!p snip.rv=match.group(1)`${1}_z 
+snippet N "natural numbers" i
+\mathbb{N}
 endsnippet
+
+context "math()"
+snippet R "real numbers" i
+\mathbb{R}
+endsnippet
+
 
 snippet "(\s+)xx" "x " riA
  $x$
@@ -57,8 +65,13 @@ snippet "(\s+)ZZ" "Z" riA
 endsnippet
 
 context "math()"
-snippet "exp" "exponential" riA
+snippet expp "exponential" wiA
 e^{${1}} ${0}
+endsnippet
+
+context "math()"
+snippet "Exp" "exponential with exp written out" riA 
+\exp{${1}} ${0}
 endsnippet
 
 context "math()"
@@ -77,20 +90,9 @@ snippet empty "\varnothing" iA
 endsnippet
 
 context "math()"
-snippet tt "go into normal font mode while in math environment" wA
-\mbox{${1}} ${0}
+snippet text "go into normal font mode while in math environment" 
+\\mbox{$1} $0
 endsnippet
-
-context "math()"
-snippet bra " bra" A
-\\bra{{${1}}}  ${0}
-endsnippet
-
-context "math()"
-snippet ket "ket"  iA
-\ket{{$1}} ${0}
-endsnippet
-
 
 snippet mk "Math" wA
 $ ${1}$`!p
@@ -98,7 +100,7 @@ if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
     snip.rv = ' '
 else:
     snip.rv = ''
-`$2
+` $0
 endsnippet
 
 context "math()"
@@ -127,6 +129,11 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 `!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
 endsnippet
 
+context "math()"
+snippet '(\\\w\{\S\}|\\\w\S|\w\S|\w|\S)(_|\s_)' "manual subscript" r
+`!p snip.rv = match.group(1)`_{$1} $0
+endsnippet
+
 snippet sr "^2" iA
 ^2
 endsnippet
@@ -140,13 +147,13 @@ snippet td "superscript" iA
 endsnippet
 
 context "math()"
-snippet to "to" iA
-\to ${0}
+snippet comp "complement of a set" iA
+^{c}
 endsnippet
 
 context "math()"
-snippet comp "complement of a set" iA
-^{c}
+snippet || "nice | symbol for sets" iA 
+\\mid
 endsnippet
 
 context "math()"
@@ -159,8 +166,9 @@ snippet sqrt "\sqrt" iA
 \\sqrt{{${1}}} ${0}
 endsnippet
 
-snippet // "Fraction" iA
-\\frac{$1}{$2}$0
+context "math()"
+snippet // "Fraction" wiA
+\\frac{${1}}{${2}} ${0}
 endsnippet
 
 
@@ -168,6 +176,7 @@ snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "Fraction" wrA
 \\frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
 
+context "math()"
 priority 1000
 snippet '^.*\)/' "() Fraction" wrA
 `!p
@@ -221,8 +230,13 @@ snippet times "multiply symbol" iA
 endsnippet
 
 context "math()"
-snippet sum "summation withbounds" iA
-\sum_{{${1}}}^{${2}} ${0}
+snippet '(\(|\$|(\s))sum' "summation withbounds" r
+`!p snip.rv=match.group(1)`sum_{{${1}}}^{${2}} ${0}
+endsnippet
+
+context "math()"
+snippet '(\(|\$|(\s))prod' "product with bounds" r
+`!p snip.rv=match.group(1)`\prod_{$1}^{$2} $0
 endsnippet
 
 context "math()"
@@ -334,7 +348,7 @@ snippet item "itemize environment"
 endsnippet
 
 snippet it "\item"
-\\item $0
+	\\item[$1.] $0
 endsnippet
 
 #Section
@@ -387,10 +401,39 @@ snippet section "reference to section"
 section \\ref{sec:${1}} ${0}
 endsnippet
 
-snippet lrp "parentheses" Ai
+
+context "math()"
+snippet "(\w|\s)lrw" "weak parentheses" rwA
+`!p snip.rv = match.group(1)`(${1}) ${0}
+endsnippet
+
+context "math()"
+snippet lrs "strong parentheses" wiA
 \\left( ${1} \\right) ${0}
 endsnippet
 
-snippet lr[ "brackets" Ai
+context "math()"
+snippet set "curly braces" wiA
+\\{ $1 \\} ${0}
+endsnippet 
+
+context "math()"
+
+snippet Set "big curly braces" wiA
+\\left\\{ $1 \\right\\} $0
+endsnippet
+
+context "math()"
+snippet "lrb" "brackets" riA
 \\left[ ${1} \\right] ${0}
+endsnippet
+
+context "math()"
+snippet lr| "euclidean norm" wiA 
+\\left| ${1} \\right| ${0} 
+endsnippet
+
+context "math()"
+snippet normm "general norm" wiA 
+\\norm{ $1 }_{ $2 } ${0} 
 endsnippet
