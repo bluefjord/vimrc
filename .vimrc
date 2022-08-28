@@ -1,7 +1,7 @@
 syntax on
-filetype plugin indent on
 "#################################
 "# General settings for vim      # 
+filetype plugin indent on
 set noerrorbells
 set tabstop=4 softtabstop=4
 set shiftwidth=4
@@ -33,14 +33,11 @@ set relativenumber
 call plug#begin('~/.vim/plugged')
 
 Plug 'lervag/vimtex'
-Plug 'nikolvs/vim-sunbather'
-Plug 'sonph/onehalf'
-Plug 'dylanaraps/wal.vim' 
-Plug 'ayu-theme/ayu-vim'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'chriskempson/base16-vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'cormacrelf/vim-colors-github'
 Plug 'KeitaNakamura/tex-conceal.vim'
 Plug 'SirVer/ultisnips'
-Plug 'habamax/vim-polar'
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-fugitive'
 Plug 'leafgarland/typescript-vim'
@@ -48,10 +45,12 @@ Plug 'vim-utils/vim-man'
 Plug 'lyuts/vim-rtags'
 Plug 'ycm-core/YouCompleteMe'
 Plug 'morhetz/gruvbox'
-"Plug 'git@github.com:kien/ctrlp.vim.git'
 Plug 'mbbill/undotree'
 
 call plug#end()
+
+
+
 "#################################
 "# vim Tex settings              # 
 "#################################
@@ -64,6 +63,7 @@ let g:vimtex_quickfix_mode=0
 set conceallevel=2
 let g:tex_conceal='abdmg'
 hi Conceal ctermbg=none
+hi Normal ctermbg=none
 
 "#################################
 "# You complete me               #
@@ -113,10 +113,13 @@ nnoremap <leader>tm :term ++rows=15<CR>
 
 "let g:gruvbox_italic=1 
 "let g:gruvbox_guisp_fallback = "bg"
-let g:gruvbox_termcolors=16
-"set background=light
+"let g:gruvbox_termcolors=16
+"set background=dark
 "set termguicolors
-colorscheme wal
+colorscheme github
+"
+"let base16colorspace=256  " Access colors present in 256 colorspace
+"colorscheme base16--dark
 
 hi clear SpellBad
 hi clear SpellCap
@@ -126,23 +129,27 @@ hi clear SpellRare
 hi SpellBad cterm=standout
 hi SpellBad ctermfg=red
 hi SpellBad guifg=Red
-hi SpellCap cterm=standout
-hi SpellCap ctermfg=lightgreen
-hi SpellCap guifg=DarkCyan
+"hi SpellCap cterm=standout
+"hi SpellCap ctermfg=lightgreen
+"hi SpellCap guifg=DarkCyan
 
-"hi SpellLocal ctermfg=yellow
-"hi SpellRare ctermfg=
-
-"augroup colorscheme_change | au!
-"    au ColorScheme polar hi Comment gui=italic cterm=italic
-"augroup END
+hi MatchParen cterm=None
+hi MatchParen ctermbg=black
+hi MatchParen ctermfg=white
 
 
 "#################################
 ""#  Mappings                     # 
 "#################################
 
-inoremap jj <Esc>:w<CR>:mkview<CR>
+nnoremap - ddp
+nnoremap _ ddkkp
+inoremap <c-u> <esc>lbveU<esc>wi
+nnoremap <c-u> lbveU<esc>w
+
+
+
+inoremap jk <Esc>:w<CR>:mkview<CR>
 nnoremap <C-j> :tabprevious<CR>
 nnoremap <C-k> :tabnext<CR>
 nnoremap <leader>s :w<CR>
@@ -152,21 +159,29 @@ nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/
 "#correcting spelling mistakes on the fly Giles Castle
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 nnoremap <F2> :set nonumber!<CR>
-"nnoremaps
-
+nnoremap <S-Enter> O<Esc>
+nnoremap <CR> o<Esc>
 
 "#################################
 "# Lines to save text folding    # 
 "#################################
 "
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent! loadview
-
+augroup filetype_tex
+    autocmd!
+    autocmd BufWinLeave *.* mkview
+    autocmd FileType tex setlocal textwidth=56 wrapmargin=56
+    autocmd FileType html setlocal shiftwidth=100 tabstop=100
+   autocmd BufWinEnter *.* silent! loadview
+   autocmd FileType matlab setlocal nospell
+augroup END
 "###################################################
 "# comment highlighting. json with comment support #
 "###################################################
 
-autocmd FileType json syntax match Comment +\/\/.\+$+
+augroup filetype_json
+    autocmd!
+    autocmd FileType json syntax match Comment +\/\/.\+$+
+augroup END
 
 " YCM
 " The best part.
@@ -174,13 +189,9 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
 nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
 
-
-
-
-
-
-
-
+"##################################################
+"# Settings specific for file types               #
+"##################################################
 
 
 
